@@ -35,6 +35,10 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
 
         final TextView textView = (TextView) findViewById(R.id.textView);
 
+        //TODO: Android ImageButton!!!
+        //TODO: first only start
+        //after start -> pause
+        //after pause -> resume or reset
         buttonStart.setOnClickListener(this);
         buttonPause.setOnClickListener(this);
         buttonStop.setOnClickListener(this);
