@@ -8,6 +8,7 @@ public class Activity {
 
     private int id;
     private String name;
+    //in seconds???
     private int time;
     private String description;
     private boolean active;
