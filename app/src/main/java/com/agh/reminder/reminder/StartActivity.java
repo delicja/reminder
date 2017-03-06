@@ -1,5 +1,6 @@
 package com.agh.reminder.reminder;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -79,6 +80,8 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
             case R.id.button3:
                 pause = false;
                 stop();
+                Intent intent = new Intent(this, ReportActivityList.class);
+                startActivity(intent);
                 break;
         }
     }
