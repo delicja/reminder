@@ -9,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.agh.reminder.reminder.models.Activity;
+import com.agh.reminder.reminder.models.ActivityResults;
 
 public class StartActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -82,14 +83,18 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
+
     private void stop() {
         running = false;
         handler.removeCallbacks(callback);
         buttonStart.setEnabled(true);
         buttonStop.setEnabled(false);
         buttonPause.setEnabled(false);
-        activity.setTime(seconds);
 
+        activity.setTime(seconds);
+        ActivityResults activityResults = new ActivityResults();
+        activityResults.setActivityId(activity.getId());
+        activityResults.setTimeSpent(activityResults.getTimeSpent() + activity.getTime());
 
         Toast.makeText(this.getApplicationContext(), Integer.toString(activity.getTime()), Toast.LENGTH_LONG).show();
     }
