@@ -34,6 +34,8 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         buttonPause.setEnabled(false);
 
         final TextView textView = (TextView) findViewById(R.id.textView);
+        final TextView title = (TextView) findViewById(R.id.title);
+        final TextView description = (TextView) findViewById(R.id.description);
 
         //TODO: Android ImageButton!!!
         //TODO: first only start
@@ -59,6 +61,8 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         };
 
         createActivity();
+        title.setText(activity.getName());
+        description.setText(activity.getDescription());
     }
 
     @Override
