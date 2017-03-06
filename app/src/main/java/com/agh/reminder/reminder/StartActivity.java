@@ -15,7 +15,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
     private Activity activity;
     private Button buttonStart, buttonStop, buttonPause;
 
-    private int seconds;
+    private int milliseconds;
     private boolean running;
     private boolean pause = false;
     private final Handler handler = new Handler();
@@ -43,15 +43,19 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         callback = new Runnable() {
             @Override
             public void run() {
-                int hours = seconds / 3600;
-                int minutes = (seconds % 3600) / 60;
-                int sec = seconds % 60;
-                String time = String.format("%02d:%02d:%02d", hours, minutes, sec);
+
+
+                long seconds = (milliseconds % 3600) / 60;
+                long minutes = (milliseconds / (1000 * 60)) % 60;
+                long hours = milliseconds / (1000 * 60 * 60);
+
+                String time = String.format("%02d:%02d:%02d", hours, minutes, seconds);
                 textView.setText(time);
+                textView2.setText(String.valueOf(milliseconds % 60));
                 if (running) {
-                    seconds++;
+                    milliseconds++;
                 }
-                handler.postDelayed(this, 1);
+                handler.postDelayed(this, 0);
             }
         };
 
@@ -81,14 +85,15 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         buttonStart.setEnabled(true);
         buttonStop.setEnabled(false);
         buttonPause.setEnabled(false);
-        activity.setTime(seconds % 60);
+        activity.setTime(milliseconds % 60);
 
 
         Toast.makeText(this.getApplicationContext(), Integer.toString(activity.getTime()), Toast.LENGTH_LONG).show();
     }
 
     private void start() {
-        if (!pause) seconds = 0;
+        //3600000
+        if (!pause) milliseconds = 3599900;
         handler.post(callback);
         running = true;
         buttonStart.setEnabled(false);
