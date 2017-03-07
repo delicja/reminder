@@ -1,6 +1,8 @@
 package com.agh.reminder.reminder;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -36,6 +38,42 @@ public class ReportActivityList extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 Report report = reports.get(position);
+
+
+                AlertDialog dialog = new android.support.v7.app.AlertDialog.Builder(ReportActivityList.this).setMessage(report.getDescription())
+                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                                // Do stuff if user accepts
+                            }
+
+
+
+                        /*}).setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                                // Do stuff when user neglects.
+                            }
+
+
+                        }).setOnCancelListener(new DialogInterface.OnCancelListener() {
+
+                            @Override
+                            public void onCancel(DialogInterface dialog) {
+                                dialog.dismiss();
+                                // Do stuff when cancelled
+                            }
+                            */
+
+                        }).create();
+                dialog.show();
+
+                report.setRead(true);
+                adapter.notifyDataSetChanged();
                 Toast.makeText(getApplicationContext(), report.getDescription(), Toast.LENGTH_SHORT).show();
             }
         });
@@ -43,23 +81,17 @@ public class ReportActivityList extends AppCompatActivity {
 
 
     private void createReports() {
-        Report r1 = new Report();
-        r1.setId(1);
-        r1.setDescription("Super raport 1");
-        r1.setDateFrom(new Date());
-        r1.setDateTo(new Date());
-        r1.setType(1);
-        r1.setRead(false);
 
-        Report r2 = new Report();
-        r2.setId(1);
-        r2.setDescription("Super raport 2");
-        r2.setDateFrom(new Date());
-        r2.setDateTo(new Date());
-        r2.setType(1);
-        r2.setRead(false);
-
-        reports.add(r1);
-        reports.add(r2);
+        for (int i = 0; i < 40; i++) {
+            Report r = new Report();
+            r.setId(i + 1);
+            r.setDescription(Long.toHexString(Double.doubleToLongBits(Math.random())));
+            r.setDateFrom(new Date());
+            r.setDateTo(new Date());
+            r.setType(1);
+            if (i % 3 == 0) r.setRead(false);
+            else r.setRead(true);
+            reports.add(r);
+        }
     }
 }

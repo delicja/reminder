@@ -1,8 +1,11 @@
 package com.agh.reminder.reminder;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.SpannableString;
+import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +24,7 @@ import java.util.List;
 public class CustomReportAdapter extends ArrayAdapter<Report> implements View.OnClickListener {
 
     private List<Report> dataSet;
-    Context mContext;
+    Context context;
 
     // View lookup cache
     private static class ViewHolder {
@@ -32,7 +35,7 @@ public class CustomReportAdapter extends ArrayAdapter<Report> implements View.On
     public CustomReportAdapter(List<Report> data, Context context) {
         super(context, R.layout.row_item, data);
         this.dataSet = data;
-        this.mContext = context;
+        this.context = context;
 
     }
 
@@ -74,9 +77,18 @@ public class CustomReportAdapter extends ArrayAdapter<Report> implements View.On
 
         lastPosition = position;
 
-        viewHolder.txtName.setText(report.getDescription());
+        SpannableString description = new SpannableString(report.getDescription());
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
-        viewHolder.txtType.setText(sdf.format(report.getDateFrom()));
+        SpannableString date = new SpannableString(sdf.format(report.getDateFrom()));
+        if (!report.isRead()) {
+            description.setSpan(new StyleSpan(Typeface.BOLD), 0, description.length(), 0);
+            date.setSpan(new StyleSpan(Typeface.BOLD), 0, date.length(), 0);
+        }
+        viewHolder.txtName.setText(description);
+        viewHolder.txtType.setText(date);
+
         return convertView;
     }
+
+    
 }
