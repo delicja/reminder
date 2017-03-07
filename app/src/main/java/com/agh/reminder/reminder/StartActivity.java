@@ -91,7 +91,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         running = false;
         handler.removeCallbacks(callback);
         buttonStart.setEnabled(true);
-        buttonStop.setEnabled(false);
+        if (pause) buttonStop.setEnabled(true);
         buttonPause.setEnabled(false);
 
         activity.setTime(seconds);
