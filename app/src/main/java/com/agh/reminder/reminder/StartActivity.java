@@ -11,22 +11,25 @@ import android.widget.Toast;
 
 import com.agh.reminder.reminder.models.Activity;
 import com.agh.reminder.reminder.models.ActivityResults;
+import com.agh.reminder.reminder.models.Stopwatch;
 
 public class StartActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Activity activity;
     private Button buttonStart, buttonStop, buttonPause;
 
-    private int seconds;
-    private boolean running;
     private boolean pause = false;
     private final Handler handler = new Handler();
     private Runnable callback;
+
+    private Stopwatch stopwatch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
+
+        stopwatch = new Stopwatch();
 
         buttonStart = (Button) findViewById(R.id.button);
         buttonPause = (Button) findViewById(R.id.button2);
@@ -50,14 +53,8 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         callback = new Runnable() {
             @Override
             public void run() {
-                int hours = seconds / 3600;
-                int minutes = (seconds % 3600) / 60;
-                int sec = seconds % 60;
-                String time = String.format("%02d:%02d:%02d", hours, minutes, sec);
-                textView.setText(time);
-                if (running) {
-                    seconds++;
-                }
+                stopwatch.startStopwatch();
+                textView.setText(stopwatch.getHumanReadableTime());
                 handler.postDelayed(this, 1000);
             }
         };
@@ -88,13 +85,13 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
 
 
     private void stop() {
-        running = false;
+        stopwatch.stopStopwatch();
+
         handler.removeCallbacks(callback);
         buttonStart.setEnabled(true);
         if (pause) buttonStop.setEnabled(true);
         buttonPause.setEnabled(false);
-
-        activity.setTime(seconds);
+        activity.setTime(stopwatch.getTime());
         ActivityResults activityResults = new ActivityResults();
         activityResults.setActivityId(activity.getId());
         activityResults.setTimeSpent(activityResults.getTimeSpent() + activity.getTime());
@@ -103,9 +100,9 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void start() {
-        if (!pause) seconds = 0;
+        if (!pause) stopwatch.resetStopwatch();
         handler.post(callback);
-        running = true;
+        stopwatch.resumeStopwatch();
         buttonStart.setEnabled(false);
         buttonStop.setEnabled(true);
         buttonPause.setEnabled(true);
