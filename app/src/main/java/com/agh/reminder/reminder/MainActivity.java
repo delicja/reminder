@@ -11,17 +11,28 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
 
+import com.agh.reminder.reminder.models.Activity;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.ActivityRecognition;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     public GoogleApiClient apiClient;
 
+    private List<Activity> list = new ArrayList<>();
+    private static CustomActivityAdapter adapter;
+    private ListView activityList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -36,6 +47,24 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             }
         });
 
+
+        activityList = (ListView) findViewById(R.id.activityList);
+
+        final Activity activity = new Activity();
+        activity.setName("Czytanie książki");
+        activity.setDescription("abc");
+
+        Activity activity2 = new Activity();
+        activity2.setName("Bieganie");
+        activity2.setDescription("abc");
+
+        list.add(activity);
+        list.add(activity2);
+
+        adapter = new CustomActivityAdapter(list, getApplicationContext());
+        activityList.setAdapter(adapter);
+
+
         apiClient = new GoogleApiClient.Builder(this)
                 .addApi(ActivityRecognition.API)
                 .addConnectionCallbacks(this)
@@ -43,7 +72,24 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 .build();
 
         apiClient.connect();
+
+        activityList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Activity activity = list.get(position);
+
+                Intent myIntent = new Intent(MainActivity.this, StartActivity.class);
+                myIntent.putExtra("name", activity.getName());
+                myIntent.putExtra("description", activity.getDescription());
+                MainActivity.this.startActivity(myIntent);
+
+
+            }
+        });
+
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

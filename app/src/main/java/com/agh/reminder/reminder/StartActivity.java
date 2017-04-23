@@ -59,9 +59,14 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
             }
         };
 
-        createActivity();
-        title.setText(activity.getName());
-        description.setText(activity.getDescription());
+
+        Intent i = getIntent();
+        String nameActivity = i.getStringExtra("name");
+        String descriptionActivity = i.getStringExtra("description");
+
+        //createActivity();
+        title.setText(nameActivity);
+        description.setText(descriptionActivity);
     }
 
     @Override
