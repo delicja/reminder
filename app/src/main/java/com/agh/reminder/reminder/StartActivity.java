@@ -83,8 +83,6 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
             case R.id.button3:
                 pause = false;
                 stop();
-                Intent intent = new Intent(this, ReportActivityList.class);
-                startActivity(intent);
                 break;
         }
     }
@@ -101,6 +99,12 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         ActivityResults activityResults = new ActivityResults();
         activityResults.setActivityId(activity.getId());
         activityResults.setTimeSpent(activityResults.getTimeSpent() + activity.getTime());
+
+        Intent intent = new Intent(this, ReportActivityList.class);
+        intent.putExtra("name", activity.getName());
+        intent.putExtra("description", activity.getDescription());
+        intent.putExtra("time", String.valueOf(activity.getTime()));
+        startActivity(intent);
 
         Toast.makeText(this.getApplicationContext(), Integer.toString(activity.getTime()), Toast.LENGTH_LONG).show();
     }

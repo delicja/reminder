@@ -1,6 +1,7 @@
 package com.agh.reminder.reminder;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -27,6 +28,13 @@ public class ReportActivityList extends AppCompatActivity {
         setContentView(R.layout.activity_report_list);
 
         reportList = (ListView) findViewById(R.id.listView);
+
+        Intent intent = getIntent();
+        String name = intent.getStringExtra("name");
+        String description = intent.getStringExtra("description");
+        String time = intent.getStringExtra("time");
+
+        Toast.makeText(this.getApplicationContext(), "Czas spędzony na " + name + " wynosi " + time, Toast.LENGTH_LONG).show();
 
         createReports();
 
