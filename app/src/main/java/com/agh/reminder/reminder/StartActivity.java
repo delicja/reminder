@@ -64,9 +64,10 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         String nameActivity = i.getStringExtra("name");
         String descriptionActivity = i.getStringExtra("description");
 
-        //createActivity();
         title.setText(nameActivity);
         description.setText(descriptionActivity);
+
+        createActivity(nameActivity, descriptionActivity);
     }
 
     @Override
@@ -113,11 +114,11 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         buttonPause.setEnabled(true);
     }
 
-    private void createActivity() {
+    private void createActivity(String name, String description) {
         activity = new Activity();
         activity.setId(1);
-        activity.setName("Sprzątanie");
-        activity.setDescription("Wiosenne porządki czas zacząć");
+        activity.setName(name);
+        activity.setDescription(description);
         activity.setActive(true);
         activity.setAutoDetect(false);
         activity.setDefault(false);
