@@ -14,11 +14,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.agh.reminder.reminder.data_access.DatabaseHelper;
 import com.agh.reminder.reminder.models.Activity;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.ActivityRecognition;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +31,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     private List<Activity> list = new ArrayList<>();
     private static CustomActivityAdapter adapter;
     private ListView activityList;
+
+    private DatabaseHelper _databaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +51,15 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             }
         });
 
+        _databaseHelper = new DatabaseHelper(this);
 
         activityList = (ListView) findViewById(R.id.activityList);
+
+        try {
+            List<Activity> activities = _databaseHelper.getActivityDao().getActive();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         final Activity activity = new Activity();
         activity.setName("Czytanie książki");
