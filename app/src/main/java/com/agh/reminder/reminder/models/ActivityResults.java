@@ -4,10 +4,6 @@ import com.j256.ormlite.field.DatabaseField;
 
 import java.util.Date;
 
-/**
- * Created by emilia on 05.03.2017.
- */
-
 public class ActivityResults {
 
     @DatabaseField(generatedId = true)
