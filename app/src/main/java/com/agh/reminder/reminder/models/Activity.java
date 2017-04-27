@@ -2,10 +2,6 @@ package com.agh.reminder.reminder.models;
 
 import com.j256.ormlite.field.DatabaseField;
 
-/**
- * Created by emilia on 05.03.2017.
- */
-
 public class Activity {
 
     @DatabaseField(generatedId = true)

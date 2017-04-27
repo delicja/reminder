@@ -5,10 +5,13 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.agh.reminder.reminder.Custom.Resources;
 import com.agh.reminder.reminder.data_access.Interfaces.IActivityDao;
 import com.agh.reminder.reminder.data_access.Interfaces.IActivityResultDao;
+import com.agh.reminder.reminder.data_access.Interfaces.IConfigurationDao;
 import com.agh.reminder.reminder.models.Activity;
 import com.agh.reminder.reminder.models.ActivityResults;
+import com.agh.reminder.reminder.models.Configuration;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
@@ -23,6 +26,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
     private IActivityDao _activityDao;
     private IActivityResultDao _activityResultsDao;
+    private IConfigurationDao _configurationDao;
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -42,6 +46,37 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             _activityResultsDao = new ActivityResultDao(dao);
         }
         return _activityResultsDao;
+    }
+
+    public IConfigurationDao getConfigurationDao() throws SQLException {
+        if(_activityResultsDao == null){
+            Dao<Configuration, Integer> dao = getDao(Configuration.class);
+            _configurationDao = new ConfigurationDao(dao);
+        }
+        return _configurationDao;
+    }
+
+    public void EnsureDefaultDataInitialized(){
+        try {
+            IConfigurationDao configurationDao = getConfigurationDao();
+
+            boolean defaultDataInitialized = configurationDao.getIsDefaultDataInitialized();
+            if(defaultDataInitialized){
+                return;
+            }
+
+            IActivityDao activityDao = getActivityDao();
+            boolean dataInitialized = activityDao.InitializeDefaultActivities();
+
+            Configuration isDefaultDataInitialized = new Configuration();
+            isDefaultDataInitialized.setKey(Resources.IsInitializedConfigurationKey);
+            isDefaultDataInitialized.setValue(String.valueOf(dataInitialized));
+
+            configurationDao.insertConfiguration(isDefaultDataInitialized);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

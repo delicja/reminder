@@ -52,11 +52,12 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         });
 
         _databaseHelper = new DatabaseHelper(this);
+        _databaseHelper.EnsureDefaultDataInitialized();
 
         activityList = (ListView) findViewById(R.id.activityList);
 
         try {
-            List<Activity> activities = _databaseHelper.getActivityDao().getActive();
+            list = _databaseHelper.getActivityDao().getActive();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -69,8 +70,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         activity2.setName("Bieganie");
         activity2.setDescription("abc");
 
-        list.add(activity);
-        list.add(activity2);
+        //list.add(activity);
+        //list.add(activity2);
 
         adapter = new CustomActivityAdapter(list, getApplicationContext());
         activityList.setAdapter(adapter);
