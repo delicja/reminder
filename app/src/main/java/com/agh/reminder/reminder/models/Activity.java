@@ -1,19 +1,25 @@
 package com.agh.reminder.reminder.models;
 
-/**
- * Created by emilia on 05.03.2017.
- */
+import com.j256.ormlite.field.DatabaseField;
 
 public class Activity {
 
+    @DatabaseField(generatedId = true)
     private int id;
+    @DatabaseField
     private String name;
     //in seconds???
+    @DatabaseField
     private int time;
+    @DatabaseField
     private String description;
+    @DatabaseField
     private boolean active;
+    @DatabaseField
     private boolean needGps;
+    @DatabaseField
     private boolean autoDetect;
+    @DatabaseField
     private boolean isDefault;
 
     public int getId() {
