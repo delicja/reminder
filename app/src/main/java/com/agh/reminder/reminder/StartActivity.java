@@ -31,7 +31,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
 
     private DatabaseHelper databaseHelper;
     private IActivityDao activityDao;
-    private Intent intent;
+    private int timeSpent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +87,7 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
 
         try {
             activity = activityDao.getById(id);
-            activity.setTime(activity.getTime());
+            timeSpent = activity.getTime();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -119,19 +119,20 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         buttonStart.setEnabled(true);
         if (pause) buttonStop.setEnabled(true);
         buttonPause.setEnabled(false);
-        int timeSpent = activity.getTime();
         activity.setTime(timeSpent + stopwatch.getTime());
         ActivityResults activityResults = new ActivityResults();
         activityResults.setActivityId(activity.getId());
         activityResults.setTimeSpent(activityResults.getTimeSpent() + activity.getTime());
 
-        try {
-            activityDao.update(activity);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
 
         if (showReport) {
+
+            try {
+                activityDao.update(activity);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
             //Intent intent = new Intent(this, ReportActivityList.class);
             //intent.putExtra("name", activity.getName());
             //intent.putExtra("description", activity.getDescription());
