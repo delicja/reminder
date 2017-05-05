@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.agh.reminder.reminder.data_access.ActivityDao;
 import com.agh.reminder.reminder.data_access.DatabaseHelper;
 import com.agh.reminder.reminder.data_access.Interfaces.IActivityDao;
 import com.agh.reminder.reminder.models.Activity;
