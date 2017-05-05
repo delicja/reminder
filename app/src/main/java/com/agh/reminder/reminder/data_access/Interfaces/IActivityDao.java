@@ -10,6 +10,9 @@ public interface IActivityDao {
     Activity getById(Integer id) throws SQLException;
     void deleteByID(Integer id) throws SQLException;
     void create(Activity activity) throws SQLException;
+    void update(Activity activity) throws  SQLException;
 
     boolean InitializeDefaultActivities();
+
+
 }

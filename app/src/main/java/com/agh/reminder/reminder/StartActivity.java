@@ -9,9 +9,14 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.agh.reminder.reminder.data_access.ActivityDao;
+import com.agh.reminder.reminder.data_access.DatabaseHelper;
+import com.agh.reminder.reminder.data_access.Interfaces.IActivityDao;
 import com.agh.reminder.reminder.models.Activity;
 import com.agh.reminder.reminder.models.ActivityResults;
 import com.agh.reminder.reminder.models.Stopwatch;
+
+import java.sql.SQLException;
 
 public class StartActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -23,6 +28,10 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
     private Runnable callback;
 
     private Stopwatch stopwatch;
+
+    private DatabaseHelper databaseHelper;
+    private IActivityDao activityDao;
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +46,14 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
 
         buttonStop.setEnabled(false);
         buttonPause.setEnabled(false);
+
+        databaseHelper = new DatabaseHelper(this);
+
+        try {
+            activityDao = databaseHelper.getActivityDao();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         final TextView textView = (TextView) findViewById(R.id.textView);
         final TextView title = (TextView) findViewById(R.id.title);
@@ -60,14 +77,21 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         };
 
 
-        Intent i = getIntent();
-        String nameActivity = i.getStringExtra("name");
-        String descriptionActivity = i.getStringExtra("description");
-
+        Intent intent = getIntent();
+        String nameActivity = intent.getStringExtra("name");
+        String descriptionActivity = intent.getStringExtra("description");
         title.setText(nameActivity);
         description.setText(descriptionActivity);
 
-        createActivity(nameActivity, descriptionActivity);
+        int id = intent.getIntExtra("id", 0);
+
+        try {
+            activity = activityDao.getById(id);
+            activity.setTime(activity.getTime());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
@@ -95,17 +119,24 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         buttonStart.setEnabled(true);
         if (pause) buttonStop.setEnabled(true);
         buttonPause.setEnabled(false);
-        activity.setTime(stopwatch.getTime());
+        int timeSpent = activity.getTime();
+        activity.setTime(timeSpent + stopwatch.getTime());
         ActivityResults activityResults = new ActivityResults();
         activityResults.setActivityId(activity.getId());
         activityResults.setTimeSpent(activityResults.getTimeSpent() + activity.getTime());
 
+        try {
+            activityDao.update(activity);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         if (showReport) {
-            Intent intent = new Intent(this, ReportActivityList.class);
-            intent.putExtra("name", activity.getName());
-            intent.putExtra("description", activity.getDescription());
-            intent.putExtra("time", String.valueOf(activity.getTime()));
-            startActivity(intent);
+            //Intent intent = new Intent(this, ReportActivityList.class);
+            //intent.putExtra("name", activity.getName());
+            //intent.putExtra("description", activity.getDescription());
+            //intent.putExtra("time", String.valueOf(activity.getTime()));
+            //startActivity(intent);
         }
 
         Toast.makeText(this.getApplicationContext(), Integer.toString(activity.getTime()), Toast.LENGTH_LONG).show();
@@ -118,16 +149,6 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         buttonStart.setEnabled(false);
         buttonStop.setEnabled(true);
         buttonPause.setEnabled(true);
-    }
-
-    private void createActivity(String name, String description) {
-        activity = new Activity();
-        activity.setId(1);
-        activity.setName(name);
-        activity.setDescription(description);
-        activity.setActive(true);
-        activity.setAutoDetect(false);
-        activity.setDefault(false);
     }
 
 }

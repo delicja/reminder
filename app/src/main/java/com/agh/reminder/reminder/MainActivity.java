@@ -83,6 +83,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 Intent myIntent = new Intent(MainActivity.this, StartActivity.class);
                 myIntent.putExtra("name", activity.getName());
                 myIntent.putExtra("description", activity.getDescription());
+                myIntent.putExtra("id", activity.getId());
                 MainActivity.this.startActivity(myIntent);
 
 

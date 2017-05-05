@@ -29,4 +29,9 @@ public abstract class BaseDao<TEntity> implements IBaseDao<TEntity> {
     public void insert(TEntity entity) throws SQLException {
         InternalDao.create(entity);
     }
+
+    @Override
+    public void update(TEntity entity) throws SQLException {
+        InternalDao.update(entity);
+    }
 }

@@ -7,4 +7,5 @@ public interface IBaseDao<TEntity> {
     List<TEntity> getAll() throws SQLException;
     TEntity getById(Integer id) throws SQLException;
     void insert(TEntity entity) throws SQLException;
+    void update(TEntity entity) throws SQLException;
 }
