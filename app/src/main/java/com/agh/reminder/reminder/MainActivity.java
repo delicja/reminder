@@ -62,17 +62,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             e.printStackTrace();
         }
 
-        final Activity activity = new Activity();
-        activity.setName("Czytanie książki");
-        activity.setDescription("abc");
-
-        Activity activity2 = new Activity();
-        activity2.setName("Bieganie");
-        activity2.setDescription("abc");
-
-        //list.add(activity);
-        //list.add(activity2);
-
         adapter = new CustomActivityAdapter(list, getApplicationContext());
         activityList.setAdapter(adapter);
 

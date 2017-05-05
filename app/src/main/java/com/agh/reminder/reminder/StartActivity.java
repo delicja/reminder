@@ -78,17 +78,17 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
                 break;
             case R.id.button2:
                 pause = true;
-                stop();
+                stop(false);
                 break;
             case R.id.button3:
                 pause = false;
-                stop();
+                stop(true);
                 break;
         }
     }
 
 
-    private void stop() {
+    private void stop(boolean showReport) {
         stopwatch.stopStopwatch();
 
         handler.removeCallbacks(callback);
@@ -100,11 +100,13 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         activityResults.setActivityId(activity.getId());
         activityResults.setTimeSpent(activityResults.getTimeSpent() + activity.getTime());
 
-        Intent intent = new Intent(this, ReportActivityList.class);
-        intent.putExtra("name", activity.getName());
-        intent.putExtra("description", activity.getDescription());
-        intent.putExtra("time", String.valueOf(activity.getTime()));
-        startActivity(intent);
+        if (showReport) {
+            Intent intent = new Intent(this, ReportActivityList.class);
+            intent.putExtra("name", activity.getName());
+            intent.putExtra("description", activity.getDescription());
+            intent.putExtra("time", String.valueOf(activity.getTime()));
+            startActivity(intent);
+        }
 
         Toast.makeText(this.getApplicationContext(), Integer.toString(activity.getTime()), Toast.LENGTH_LONG).show();
     }
