@@ -137,9 +137,11 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
             //intent.putExtra("description", activity.getDescription());
             //intent.putExtra("time", String.valueOf(activity.getTime()));
             //startActivity(intent);
+
+            startActivity(new Intent(getApplicationContext(),MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
         }
 
-        Toast.makeText(this.getApplicationContext(), Integer.toString(activity.getTime()), Toast.LENGTH_LONG).show();
+        //Toast.makeText(this.getApplicationContext(), Integer.toString(activity.getTime()), Toast.LENGTH_LONG).show();
     }
 
     private void start() {
