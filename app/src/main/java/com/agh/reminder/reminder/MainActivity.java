@@ -26,7 +26,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
-    public GoogleApiClient apiClient;
+    //public GoogleApiClient apiClient;
 
     private List<Activity> list = new ArrayList<>();
     private static CustomActivityAdapter adapter;
@@ -54,17 +54,17 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         _databaseHelper = new DatabaseHelper(this);
         _databaseHelper.EnsureDefaultDataInitialized();
 
-        activityList = (ListView) findViewById(R.id.activityList);
-
         try {
             list = _databaseHelper.getActivityDao().getActive();
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        adapter = new CustomActivityAdapter(list, getApplicationContext());
+        activityList = (ListView) findViewById(R.id.activityList);
+        adapter = new CustomActivityAdapter(list, this);
         activityList.setAdapter(adapter);
 
+/*
 
         apiClient = new GoogleApiClient.Builder(this)
                 .addApi(ActivityRecognition.API)
@@ -73,22 +73,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 .build();
 
         apiClient.connect();
-
-        activityList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                Activity activity = list.get(position);
-
-                Intent myIntent = new Intent(MainActivity.this, StartActivity.class);
-                myIntent.putExtra("name", activity.getName());
-                myIntent.putExtra("description", activity.getDescription());
-                myIntent.putExtra("id", activity.getId());
-                MainActivity.this.startActivity(myIntent);
-
-
-            }
-        });
+*/
 
     }
 
@@ -122,9 +107,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
      */
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-        Intent intent = new Intent(this, ActivityRecognizedService.class);
-        PendingIntent pendingIntent = PendingIntent.getService(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        ActivityRecognition.ActivityRecognitionApi.requestActivityUpdates(apiClient, 0, pendingIntent);
+        //Intent intent = new Intent(this, ActivityRecognizedService.class);
+        //PendingIntent pendingIntent = PendingIntent.getService(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        //ActivityRecognition.ActivityRecognitionApi.requestActivityUpdates(apiClient, 0, pendingIntent);
     }
 
     @Override
