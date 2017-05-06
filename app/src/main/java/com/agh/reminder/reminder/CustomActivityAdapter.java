@@ -103,7 +103,7 @@ public class CustomActivityAdapter extends ArrayAdapter<Activity> implements Vie
         editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //do something
+                goToNewActivity(activity, EditActivity.class);
                 notifyDataSetChanged();
             }
         });
@@ -111,13 +111,7 @@ public class CustomActivityAdapter extends ArrayAdapter<Activity> implements Vie
         rowView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(context, StartActivity.class);
-                myIntent.putExtra("name", activity.getName());
-                myIntent.putExtra("description", activity.getDescription());
-                myIntent.putExtra("timeSpent", activity.getTime());
-                myIntent.putExtra("id", activity.getId());
-                myIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(myIntent);
+                goToNewActivity(activity, StartActivity.class);
             }
         });
 
@@ -135,5 +129,15 @@ public class CustomActivityAdapter extends ArrayAdapter<Activity> implements Vie
     @Override
     public int getCount() {
         return dataSet.size();
+    }
+
+    private void goToNewActivity(Activity activity, Class<?> cls) {
+        Intent myIntent = new Intent(context, cls);
+        myIntent.putExtra("name", activity.getName());
+        myIntent.putExtra("description", activity.getDescription());
+        myIntent.putExtra("timeSpent", activity.getTime());
+        myIntent.putExtra("id", String.valueOf(activity.getId()));
+        myIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(myIntent);
     }
 }
