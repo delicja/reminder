@@ -118,7 +118,7 @@ public class CustomActivityAdapter extends ArrayAdapter<Activity> implements Vie
 
         SpannableString name = new SpannableString(activity.getName());
         SpannableString description = new SpannableString(activity.getDescription());
-        SpannableString timeSpent = new SpannableString(String.valueOf(activity.getTime()));
+        SpannableString timeSpent = new SpannableString(String.valueOf(activity.getTime()/60));
         viewHolder.txtName.setText(name);
         viewHolder.txtDescription.setText(description);
         viewHolder.txtTimeSpent.setText(timeSpent);
