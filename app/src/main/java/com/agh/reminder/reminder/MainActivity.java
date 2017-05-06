@@ -52,10 +52,12 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         });
 
         _databaseHelper = new DatabaseHelper(this);
-        _databaseHelper.EnsureDefaultDataInitialized();
 
         try {
             list = _databaseHelper.getActivityDao().getActive();
+            if (list.isEmpty()) {
+                _databaseHelper.EnsureDefaultDataInitialized();
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }

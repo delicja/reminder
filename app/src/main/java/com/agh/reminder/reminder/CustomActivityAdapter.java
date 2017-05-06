@@ -94,8 +94,7 @@ public class CustomActivityAdapter extends ArrayAdapter<Activity> implements Vie
                     dataSet.remove(p);
                     activityDao.deleteByID(activity.getId());
                     notifyDataSetChanged();
-                    Toast.makeText(context, "Item was deleted!",
-                            Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(context, "Item was deleted!",Toast.LENGTH_SHORT).show();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
