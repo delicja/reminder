@@ -29,7 +29,7 @@ public class EditActivity extends AppCompatActivity {
         final EditText descriptionTxt = (EditText) findViewById(R.id.editText4);
 
         Intent intent = getIntent();
-        final int id = Integer.parseInt(intent.getStringExtra("id"));
+        final int id = intent.getIntExtra("id", 0);
         String name = intent.getStringExtra("name");
         String description = intent.getStringExtra("description");
 

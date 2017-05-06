@@ -136,7 +136,7 @@ public class CustomActivityAdapter extends ArrayAdapter<Activity> implements Vie
         myIntent.putExtra("name", activity.getName());
         myIntent.putExtra("description", activity.getDescription());
         myIntent.putExtra("timeSpent", activity.getTime());
-        myIntent.putExtra("id", String.valueOf(activity.getId()));
+        myIntent.putExtra("id", activity.getId());
         myIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(myIntent);
     }

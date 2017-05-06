@@ -81,7 +81,6 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         String descriptionActivity = intent.getStringExtra("description");
         title.setText(nameActivity);
         description.setText(descriptionActivity);
-
         int id = intent.getIntExtra("id", 0);
 
         try {
