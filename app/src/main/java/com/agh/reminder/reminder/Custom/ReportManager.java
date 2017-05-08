@@ -5,8 +5,15 @@ import com.agh.reminder.reminder.models.Activity;
 import com.agh.reminder.reminder.models.ActivityResults;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Dictionary;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 public class ReportManager {
 
@@ -36,14 +43,63 @@ public class ReportManager {
     public String prepareReportForDateRange(Date from, Date to){
         try {
             List<ActivityResults> results = databaseHelper.getActivityResultDao().getByDateRange(from, to);
-            return createReport(results);
+            return createReport(results, getDateDiff(from, to, TimeUnit.DAYS));
         } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
+            return e.getMessage();
         }
     }
 
-    private String createReport(List<ActivityResults> activityResults) {
-        return null;
+    private String createReport(List<ActivityResults> activityResults, long days) throws SQLException {
+        HashMap<Integer, Activity> activityDictionary = new HashMap<>();
+        HashMap<Integer, List<ActivityResults>> resultsGroupped = new HashMap<>();
+
+        for (ActivityResults result:activityResults){
+            Integer activityId = result.getActivityId();
+
+            if(!activityDictionary.containsKey(activityId)){
+                Activity activity = databaseHelper.getActivityDao().getById(activityId);
+                activityDictionary.put(activityId, activity);
+            }
+
+            List<ActivityResults> group;
+            if(resultsGroupped.containsKey(activityId)){
+                group = resultsGroupped.get(activityId);
+            } else{
+                group = new ArrayList<>();
+                resultsGroupped.put(activityId, group);
+            }
+            group.add(result);
+        }
+
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for (Map.Entry<Integer, List<ActivityResults>> resultGroup: resultsGroupped.entrySet()) {
+            Activity activity = activityDictionary.get(resultGroup.getKey());
+
+            long expectedTime = activity.getTime() * days;
+            long calculatedTime = 0L;
+            Double kilometers = null;
+            for (ActivityResults result: resultGroup.getValue()) {
+                calculatedTime += result.getTimeSpent();
+                if(activity.isNeedGps()) {
+                    kilometers += (result.getGpsDistance() / 1000);
+                }
+            }
+
+            stringBuilder.append("Activity: " + activity.getName());
+            stringBuilder.append("\nDescription " + activity.getDescription());
+
+            stringBuilder.append("\nExpected time: " + String.valueOf(expectedTime) + ", time spent: " + String.valueOf(calculatedTime));
+
+            if(activity.isNeedGps() && kilometers != null){
+                stringBuilder.append("\nKilometers: " + String.valueOf(kilometers));
+            }
+        }
+        return stringBuilder.toString();
+    }
+
+    public static long getDateDiff(Date date1, Date date2, TimeUnit timeUnit) {
+        long diffInMillisec = date2.getTime() - date1.getTime();
+        return timeUnit.convert(diffInMillisec, TimeUnit.MILLISECONDS);
     }
 }
