@@ -1,6 +1,7 @@
 package com.agh.reminder.reminder.data_access;
 
 
+import com.agh.reminder.reminder.Custom.Utils;
 import com.agh.reminder.reminder.data_access.Interfaces.IActivityResultDao;
 import com.agh.reminder.reminder.models.ActivityResults;
 import com.j256.ormlite.dao.Dao;
@@ -19,7 +20,7 @@ public class ActivityResultDao extends BaseDao<ActivityResults> implements IActi
 
     @Override
     public List<ActivityResults> getByDate(Date date) throws SQLException {
-        return getByDateRange(getMinDate(date), getMaxDate(date));
+        return getByDateRange(Utils.getMinDate(date), Utils.getMaxDate(date));
     }
 
     @Override
@@ -53,27 +54,5 @@ public class ActivityResultDao extends BaseDao<ActivityResults> implements IActi
     @Override
     public void createResult(ActivityResults result) throws SQLException {
         InternalDao.create(result);
-    }
-
-    private Date getMinDate(Date date) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        int year = cal.get(Calendar.YEAR);
-        int month = cal.get(Calendar.MONTH);
-        int day = cal.get(Calendar.DAY_OF_MONTH);
-
-        Calendar myCalendar = new GregorianCalendar(year, month, day, 0, 0, 0);
-        return myCalendar.getTime();
-    }
-
-    private Date getMaxDate(Date date) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        int year = cal.get(Calendar.YEAR);
-        int month = cal.get(Calendar.MONTH);
-        int day = cal.get(Calendar.DAY_OF_MONTH);
-
-        Calendar myCalendar = new GregorianCalendar(year, month, day, 23, 59, 59);
-        return myCalendar.getTime();
     }
 }
