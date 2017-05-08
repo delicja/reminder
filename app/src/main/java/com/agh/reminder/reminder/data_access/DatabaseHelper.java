@@ -85,6 +85,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             Log.i(DatabaseHelper.class.getName(), "onCreate");
             TableUtils.createTable(connectionSource, Activity.class);
             TableUtils.createTable(connectionSource, ActivityResults.class);
+            TableUtils.createTable(connectionSource, Configuration.class);
         } catch (SQLException e) {
             Log.e(DatabaseHelper.class.getName(), "Can't create database", e);
             throw new RuntimeException(e);
@@ -97,6 +98,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             Log.i(DatabaseHelper.class.getName(), "onUpgrade");
             TableUtils.dropTable(connectionSource, Activity.class, true);
             TableUtils.dropTable(connectionSource, ActivityResults.class, true);
+            TableUtils.dropTable(connectionSource, Configuration.class, true);
             // after we drop the old databases, we create the new ones
             onCreate(database, connectionSource);
         } catch (SQLException e) {
