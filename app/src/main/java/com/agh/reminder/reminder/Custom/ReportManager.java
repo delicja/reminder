@@ -7,10 +7,7 @@ import com.agh.reminder.reminder.models.ActivityResults;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Dictionary;
-import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -51,7 +48,7 @@ public class ReportManager {
 
     private String createReport(List<ActivityResults> activityResults, long days) throws SQLException {
         HashMap<Integer, Activity> activityDictionary = new HashMap<>();
-        HashMap<Integer, List<ActivityResults>> resultsGroupped = new HashMap<>();
+        HashMap<Integer, List<ActivityResults>> resultsGrouped = new HashMap<>();
 
         for (ActivityResults result:activityResults){
             Integer activityId = result.getActivityId();
@@ -62,18 +59,17 @@ public class ReportManager {
             }
 
             List<ActivityResults> group;
-            if(resultsGroupped.containsKey(activityId)){
-                group = resultsGroupped.get(activityId);
+            if(resultsGrouped.containsKey(activityId)){
+                group = resultsGrouped.get(activityId);
             } else{
                 group = new ArrayList<>();
-                resultsGroupped.put(activityId, group);
+                resultsGrouped.put(activityId, group);
             }
             group.add(result);
         }
 
         StringBuilder stringBuilder = new StringBuilder();
-
-        for (Map.Entry<Integer, List<ActivityResults>> resultGroup: resultsGroupped.entrySet()) {
+        for (Map.Entry<Integer, List<ActivityResults>> resultGroup: resultsGrouped.entrySet()) {
             Activity activity = activityDictionary.get(resultGroup.getKey());
 
             long expectedTime = activity.getTime() * days;
