@@ -5,7 +5,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.agh.reminder.reminder.Custom.Resources;
+import com.agh.reminder.reminder.custom.Resources;
 import com.agh.reminder.reminder.data_access.Interfaces.IActivityDao;
 import com.agh.reminder.reminder.data_access.Interfaces.IActivityResultDao;
 import com.agh.reminder.reminder.data_access.Interfaces.IConfigurationDao;

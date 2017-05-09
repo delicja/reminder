@@ -1,4 +1,4 @@
-package com.agh.reminder.reminder;
+package com.agh.reminder.reminder.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,12 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.agh.reminder.reminder.EditActivity;
+import com.agh.reminder.reminder.R;
+import com.agh.reminder.reminder.StartActivity;
 import com.agh.reminder.reminder.data_access.DatabaseHelper;
 import com.agh.reminder.reminder.data_access.Interfaces.IActivityDao;
 import com.agh.reminder.reminder.models.Activity;

@@ -1,24 +1,26 @@
 package com.agh.reminder.reminder;
 
-import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.agh.reminder.reminder.adapters.CustomActivityAdapter;
+import com.agh.reminder.reminder.adapters.ReminderPagerAdapter;
 import com.agh.reminder.reminder.data_access.DatabaseHelper;
 import com.agh.reminder.reminder.models.Activity;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.ActivityRecognition;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -28,17 +30,13 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
     //public GoogleApiClient apiClient;
 
-    private List<Activity> list = new ArrayList<>();
-    private static CustomActivityAdapter adapter;
-    private ListView activityList;
 
-    private DatabaseHelper _databaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -51,19 +49,31 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             }
         });
 
-        _databaseHelper = new DatabaseHelper(this);
-        _databaseHelper.EnsureDefaultDataInitialized();
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        tabLayout.addTab(tabLayout.newTab().setText("Activities"));
+        tabLayout.addTab(tabLayout.newTab().setText("Reports"));
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
-        try {
-            list = _databaseHelper.getActivityDao().getActive();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+        final ReminderPagerAdapter adapter = new ReminderPagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(adapter);
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
 
-        activityList = (ListView) findViewById(R.id.activityList);
-        adapter = new CustomActivityAdapter(list, this);
-        activityList.setAdapter(adapter);
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
 
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
 /*
 
         apiClient = new GoogleApiClient.Builder(this)

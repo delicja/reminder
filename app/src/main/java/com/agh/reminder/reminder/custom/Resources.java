@@ -1,4 +1,4 @@
-package com.agh.reminder.reminder.Custom;
+package com.agh.reminder.reminder.custom;
 
 public class Resources {
     public static String IsInitializedConfigurationKey = "IsInitialized";

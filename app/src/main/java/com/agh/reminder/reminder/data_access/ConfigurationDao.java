@@ -1,6 +1,6 @@
 package com.agh.reminder.reminder.data_access;
 
-import com.agh.reminder.reminder.Custom.Resources;
+import com.agh.reminder.reminder.custom.Resources;
 import com.agh.reminder.reminder.data_access.Interfaces.IConfigurationDao;
 import com.agh.reminder.reminder.models.Configuration;
 import com.j256.ormlite.dao.Dao;

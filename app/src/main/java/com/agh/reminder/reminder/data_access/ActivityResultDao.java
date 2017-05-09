@@ -1,15 +1,13 @@
 package com.agh.reminder.reminder.data_access;
 
 
-import com.agh.reminder.reminder.Custom.Utils;
+import com.agh.reminder.reminder.custom.Utils;
 import com.agh.reminder.reminder.data_access.Interfaces.IActivityResultDao;
 import com.agh.reminder.reminder.models.ActivityResults;
 import com.j256.ormlite.dao.Dao;
 
 import java.sql.SQLException;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 public class ActivityResultDao extends BaseDao<ActivityResults> implements IActivityResultDao {
