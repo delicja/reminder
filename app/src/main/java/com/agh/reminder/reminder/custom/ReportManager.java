@@ -1,4 +1,4 @@
-package com.agh.reminder.reminder.Custom;
+package com.agh.reminder.reminder.custom;
 
 import com.agh.reminder.reminder.data_access.DatabaseHelper;
 import com.agh.reminder.reminder.models.Activity;

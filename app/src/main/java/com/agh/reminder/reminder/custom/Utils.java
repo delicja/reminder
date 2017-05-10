@@ -1,4 +1,4 @@
-package com.agh.reminder.reminder.Custom;
+package com.agh.reminder.reminder.custom;
 
 import java.util.Calendar;
 import java.util.Date;

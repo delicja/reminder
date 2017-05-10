@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.agh.reminder.reminder.adapters.CustomReportAdapter;
 import com.agh.reminder.reminder.models.Report;
 
 import java.util.ArrayList;

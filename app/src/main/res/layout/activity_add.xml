@@ -50,13 +50,14 @@
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="165dp" />
 
-<!--        <CheckBox
+        <CheckBox
             android:id="@+id/checkBox2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Is active"
+            android:checked="true"
             tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="238dp" />-->
+            tools:layout_editor_absoluteY="238dp" />
 
         <CheckBox
             android:id="@+id/checkBox3"

@@ -1,4 +1,4 @@
-package com.agh.reminder.reminder;
+package com.agh.reminder.reminder.adapters;
 
 import android.content.Context;
 import android.graphics.Typeface;
@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.agh.reminder.reminder.R;
 import com.agh.reminder.reminder.models.Report;
 
 import java.text.SimpleDateFormat;

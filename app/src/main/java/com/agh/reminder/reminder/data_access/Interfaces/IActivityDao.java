@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface IActivityDao {
     List<Activity> getActive() throws SQLException;
+    List<Activity> getAll() throws SQLException;
+    List<Activity> getDefault() throws SQLException;
     Activity getById(Integer id) throws SQLException;
     void deleteByID(Integer id) throws SQLException;
     void create(Activity activity) throws SQLException;

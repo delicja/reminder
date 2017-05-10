@@ -1,5 +1,6 @@
 package com.agh.reminder.reminder.data_access.Interfaces;
 
+import com.agh.reminder.reminder.models.Activity;
 import com.agh.reminder.reminder.models.ActivityResults;
 
 import java.sql.SQLException;
@@ -13,4 +14,6 @@ public interface IActivityResultDao {
     void createResult(Integer activityId, Date from, Date to, int timeSpent) throws SQLException;
     void createResult(Integer activityId, Date from, Date to, int timeSpent, double gpsDistance) throws SQLException;
     void createResult(ActivityResults result) throws SQLException;
+
+    void prepareDefaultData(List<Activity> activities) throws SQLException;
 }
