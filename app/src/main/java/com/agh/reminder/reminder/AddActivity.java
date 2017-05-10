@@ -27,7 +27,7 @@ public class AddActivity extends AppCompatActivity {
 
         final EditText name = (EditText) findViewById(R.id.editText3);
         final EditText description = (EditText) findViewById(R.id.editText4);
-        //final CheckBox isActive = (CheckBox) findViewById(R.id.checkBox2);
+        final CheckBox isActive = (CheckBox) findViewById(R.id.checkBox2);
         final CheckBox needsGps = (CheckBox) findViewById(R.id.checkBox3);
 
         Button addButton = (Button) findViewById(R.id.button4);
@@ -38,8 +38,8 @@ public class AddActivity extends AppCompatActivity {
                 Activity activity = new Activity();
                 activity.setName(name.getText().toString());
                 activity.setDescription(description.getText().toString());
-                activity.setActive(true);
-                activity.setNeedGps(needsGps.isEnabled());
+                activity.setActive(isActive.isChecked());
+                activity.setNeedGps(needsGps.isChecked());
                 activity.setAutoDetect(false);
                 activity.setDefault(false);
                 activity.setTime(0);
@@ -50,9 +50,10 @@ public class AddActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                Intent i=new Intent(AddActivity.this,MainActivity.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i);
+                Intent intent =new Intent(AddActivity.this,MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.putExtra("addedActivityId", activity.getId());
+                startActivity(intent);
             }
         });
 

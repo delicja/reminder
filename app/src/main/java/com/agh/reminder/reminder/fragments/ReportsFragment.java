@@ -6,13 +6,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.agh.reminder.reminder.MainActivity;
 import com.agh.reminder.reminder.R;
+import com.agh.reminder.reminder.data_access.DatabaseHelper;
 
 
 public class ReportsFragment extends Fragment {
 
+    private DatabaseHelper databaseHelper;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.activity_main, container, false);
+        //databaseHelper = ((MainActivity)getActivity()).getDatabaseHelper();
+        return inflater.inflate(R.layout.report, container, false);
     }
 }

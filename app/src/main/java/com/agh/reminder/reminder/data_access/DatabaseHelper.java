@@ -68,6 +68,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             IActivityDao activityDao = getActivityDao();
             boolean dataInitialized = activityDao.InitializeDefaultActivities();
 
+            getActivityResultDao().prepareDefaultData(activityDao.getDefault());
+
             Configuration isDefaultDataInitialized = new Configuration();
             isDefaultDataInitialized.setKey(Resources.IsInitializedConfigurationKey);
             isDefaultDataInitialized.setValue(String.valueOf(dataInitialized));

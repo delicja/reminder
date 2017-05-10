@@ -10,9 +10,6 @@ import java.util.List;
 
 public class ActivityDao extends BaseDao<Activity> implements IActivityDao {
 
-
-
-
     public ActivityDao(Dao<Activity, Integer> activityDao){
         super(activityDao);
     }
@@ -20,6 +17,16 @@ public class ActivityDao extends BaseDao<Activity> implements IActivityDao {
     @Override
     public List<Activity> getActive() throws SQLException {
         return InternalDao.queryBuilder().where().eq("active", true).query();
+    }
+
+    @Override
+    public List<Activity> getAll() throws SQLException {
+        return InternalDao.queryForAll();
+    }
+
+    @Override
+    public List<Activity> getDefault() throws SQLException {
+        return InternalDao.queryBuilder().where().eq("isDefault", true).query();
     }
 
     @Override
@@ -35,12 +42,12 @@ public class ActivityDao extends BaseDao<Activity> implements IActivityDao {
     @Override
     public boolean InitializeDefaultActivities() {
         try {
-            Activity swimming = prepareActivity("Pływanie", "Pływanie", false, false, 30);
-            Activity reading = prepareActivity("Czytanie", "Pływanie", false, false, 30);
-            Activity running = prepareActivity("Bieganie", "Pływanie", false, false, 30);
-            Activity yoga = prepareActivity("Yoga", "Pływanie", false, false, 30);
-            Activity gaming = prepareActivity("Granie na komputerze", "Pływanie", false, false, 30);
-            Activity football = prepareActivity("Granie w piłkę nożną", "Pływanie", false, false, 30);
+            Activity swimming = prepareActivity("Pływanie", "Dobre na plecy", false, false, 30);
+            Activity reading = prepareActivity("Czytanie", "Dobre na mózg", false, false, 30);
+            Activity running = prepareActivity("Bieganie", "Dobre...bo tak", false, false, 30);
+            Activity yoga = prepareActivity("Yoga", "Porozciągaj się", false, false, 30);
+            Activity gaming = prepareActivity("Granie na komputerze", "Doom ftw!", false, false, 30);
+            Activity football = prepareActivity("Granie w piłkę nożną", "Real madrit", false, false, 30);
 
             create(swimming);
             create(reading);

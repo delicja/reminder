@@ -3,6 +3,7 @@ package com.agh.reminder.reminder.data_access;
 
 import com.agh.reminder.reminder.custom.Utils;
 import com.agh.reminder.reminder.data_access.Interfaces.IActivityResultDao;
+import com.agh.reminder.reminder.models.Activity;
 import com.agh.reminder.reminder.models.ActivityResults;
 import com.j256.ormlite.dao.Dao;
 
@@ -52,5 +53,15 @@ public class ActivityResultDao extends BaseDao<ActivityResults> implements IActi
     @Override
     public void createResult(ActivityResults result) throws SQLException {
         InternalDao.create(result);
+    }
+
+    @Override
+    public void prepareDefaultData(List<Activity> activities) throws SQLException {
+        Date startOfTheMonth = Utils.getFirstDayOfMonth();
+        Date endOfTheMonth = Utils.getLastDayOfMonth();
+
+
+
+
     }
 }

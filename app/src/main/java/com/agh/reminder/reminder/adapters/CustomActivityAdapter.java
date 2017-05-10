@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.agh.reminder.reminder.EditActivity;
 import com.agh.reminder.reminder.R;
 import com.agh.reminder.reminder.StartActivity;
+import com.agh.reminder.reminder.custom.Interfaces.IActivitySelectorHandler;
 import com.agh.reminder.reminder.data_access.DatabaseHelper;
 import com.agh.reminder.reminder.data_access.Interfaces.IActivityDao;
 import com.agh.reminder.reminder.models.Activity;
@@ -22,16 +23,13 @@ import com.agh.reminder.reminder.models.Activity;
 import java.sql.SQLException;
 import java.util.List;
 
-/**
- * Created by emilia on 23.04.2017.
- */
-
 public class CustomActivityAdapter extends ArrayAdapter<Activity> implements View.OnClickListener {
 
     private List<Activity> dataSet;
     private Context context;
     private DatabaseHelper databaseHelper;
     private IActivityDao activityDao;
+    private IActivitySelectorHandler activitySelectorHandler;
 
     public CustomActivityAdapter(List<Activity> data, Context context) {
         super(context, 0, data);
@@ -94,6 +92,9 @@ public class CustomActivityAdapter extends ArrayAdapter<Activity> implements Vie
                     dataSet.remove(p);
                     activityDao.deleteByID(activity.getId());
                     notifyDataSetChanged();
+
+                    activitySelectorHandler.onActivityDeleted(activity);
+
                     //Toast.makeText(context, "Item was deleted!",Toast.LENGTH_SHORT).show();
                 } catch (SQLException e) {
                     e.printStackTrace();
@@ -124,6 +125,10 @@ public class CustomActivityAdapter extends ArrayAdapter<Activity> implements Vie
         viewHolder.txtTimeSpent.setText(timeSpent);
 
         return rowView;
+    }
+
+    public void setActivitySelectorHandler(IActivitySelectorHandler activitySelectorHandler){
+        this.activitySelectorHandler = activitySelectorHandler;
     }
 
     @Override
