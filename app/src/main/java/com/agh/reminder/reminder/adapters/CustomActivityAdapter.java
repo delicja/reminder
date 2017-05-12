@@ -119,11 +119,14 @@ public class CustomActivityAdapter extends ArrayAdapter<Activity> implements Vie
 
         SpannableString name = new SpannableString(activity.getName());
         SpannableString description = new SpannableString(activity.getDescription());
-        SpannableString timeSpent = new SpannableString(String.valueOf(activity.getTime()/60));
+        try {
+            SpannableString timeSpent = new SpannableString(String.valueOf(databaseHelper.getActivityResultDao().countTimeSpentForToday(activity.getId())));
+            viewHolder.txtTimeSpent.setText(timeSpent);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         viewHolder.txtName.setText(name);
         viewHolder.txtDescription.setText(description);
-        viewHolder.txtTimeSpent.setText(timeSpent);
-
         return rowView;
     }
 

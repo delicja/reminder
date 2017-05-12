@@ -11,9 +11,11 @@ public interface IActivityResultDao {
     List<ActivityResults> getByDate(Date date) throws SQLException;
     List<ActivityResults> getByDateRange(Date from, Date to) throws SQLException;
 
-    void createResult(Integer activityId, Date from, Date to, int timeSpent) throws SQLException;
-    void createResult(Integer activityId, Date from, Date to, int timeSpent, double gpsDistance) throws SQLException;
+    void createResult(Integer activityId, Date date, int timeSpent) throws SQLException;
+    void createResult(Integer activityId, Date date, int timeSpent, double gpsDistance) throws SQLException;
     void createResult(ActivityResults result) throws SQLException;
+
+    long countTimeSpentForToday(Integer activityId) throws SQLException;
 
     void prepareDefaultData(List<Activity> activities) throws SQLException;
 }

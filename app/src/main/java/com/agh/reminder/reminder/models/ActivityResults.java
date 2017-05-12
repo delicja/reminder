@@ -11,9 +11,7 @@ public class ActivityResults {
     @DatabaseField
     private int activityId;
     @DatabaseField
-    private Date dateFrom;
-    @DatabaseField
-    private Date dateTo;
+    private Date date;
     @DatabaseField
     private double gpsDistance;
     @DatabaseField
@@ -37,20 +35,12 @@ public class ActivityResults {
         this.activityId = activityId;
     }
 
-    public Date getDateFrom() {
-        return dateFrom;
+    public Date getDate() {
+        return date;
     }
 
-    public void setDateFrom(Date dateFrom) {
-        this.dateFrom = dateFrom;
-    }
-
-    public Date getDateTo() {
-        return dateTo;
-    }
-
-    public void setDateTo(Date dateTo) {
-        this.dateTo = dateTo;
+    public void setDate(Date dateFrom) {
+        this.date = dateFrom;
     }
 
     public double getGpsDistance() {
