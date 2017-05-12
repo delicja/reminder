@@ -42,12 +42,12 @@ public class ActivityDao extends BaseDao<Activity> implements IActivityDao {
     @Override
     public boolean InitializeDefaultActivities() {
         try {
-            Activity swimming = prepareActivity("Pływanie", "Dobre na plecy", false, false, 30);
+            Activity swimming = prepareActivity("Pływanie", "Dobre na plecy", false, false, 60);
             Activity reading = prepareActivity("Czytanie", "Dobre na mózg", false, false, 30);
-            Activity running = prepareActivity("Bieganie", "Dobre...bo tak", false, false, 30);
-            Activity yoga = prepareActivity("Yoga", "Porozciągaj się", false, false, 30);
+            Activity running = prepareActivity("Bieganie", "Dobre...bo tak", false, false, 45);
+            Activity yoga = prepareActivity("Yoga", "Porozciągaj się", false, false, 15);
             Activity gaming = prepareActivity("Granie na komputerze", "Doom ftw!", false, false, 30);
-            Activity football = prepareActivity("Granie w piłkę nożną", "Real madrit", false, false, 30);
+            Activity football = prepareActivity("Granie w piłkę nożną", "Real madrit", false, false, 120);
 
             create(swimming);
             create(reading);

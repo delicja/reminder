@@ -40,7 +40,7 @@ public class ReportManager {
     public String prepareReportForDateRange(Date from, Date to){
         try {
             List<ActivityResults> results = databaseHelper.getActivityResultDao().getByDateRange(from, to);
-            return createReport(results, getDateDiff(from, to, TimeUnit.DAYS));
+            return createReport(results, Utils.getDateDiff(from, to, TimeUnit.DAYS));
         } catch (SQLException e) {
             return e.getMessage();
         }
@@ -68,6 +68,10 @@ public class ReportManager {
             group.add(result);
         }
 
+        if(days == 0) {
+            days = 1;
+        }
+
         StringBuilder stringBuilder = new StringBuilder();
         for (Map.Entry<Integer, List<ActivityResults>> resultGroup: resultsGrouped.entrySet()) {
             Activity activity = activityDictionary.get(resultGroup.getKey());
@@ -82,20 +86,15 @@ public class ReportManager {
                 }
             }
 
-            stringBuilder.append("Activity: " + activity.getName());
-            stringBuilder.append("\nDescription " + activity.getDescription());
+            stringBuilder.append("\n\tActivity: " + activity.getName());
+            stringBuilder.append("\n\tDescription: " + activity.getDescription());
 
-            stringBuilder.append("\nExpected time: " + String.valueOf(expectedTime) + ", time spent: " + String.valueOf(calculatedTime));
+            stringBuilder.append("\n\tExpected time: " + String.valueOf(expectedTime) + ", time spent: " + String.valueOf(calculatedTime));
 
             if(activity.isNeedGps() && kilometers != null){
-                stringBuilder.append("\nKilometers: " + String.valueOf(kilometers));
+                stringBuilder.append("\n\tKilometers: " + String.valueOf(kilometers));
             }
         }
         return stringBuilder.toString();
-    }
-
-    public static long getDateDiff(Date date1, Date date2, TimeUnit timeUnit) {
-        long diffInMillisec = date2.getTime() - date1.getTime();
-        return timeUnit.convert(diffInMillisec, TimeUnit.MILLISECONDS);
     }
 }

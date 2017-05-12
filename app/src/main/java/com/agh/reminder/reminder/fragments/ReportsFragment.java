@@ -91,7 +91,7 @@ public class ReportsFragment extends Fragment {
                 if(isChecked) {
                     selectCustomDatePanel.setVisibility(View.VISIBLE);
                 } else {
-                    selectCustomDatePanel.setVisibility(View.INVISIBLE);
+                    selectCustomDatePanel.setVisibility(View.GONE);
                 }
             }
         });
@@ -126,7 +126,7 @@ public class ReportsFragment extends Fragment {
 
     private void generateReport(){
         if(selectCustomDatePanel.getVisibility() == View.VISIBLE) {
-            selectCustomDatePanel.setVisibility(View.INVISIBLE);
+            selectCustomDatePanel.setVisibility(View.GONE);
         }
 
         String report = "";
@@ -155,7 +155,7 @@ public class ReportsFragment extends Fragment {
 
     private void selectStartDate(int year, int month, int dayOfMonth) {
         Calendar cal = GregorianCalendar.getInstance();
-        cal.set(year, month, dayOfMonth);
+        cal.set(year, month - 1, dayOfMonth);
 
         startDate = cal.getTime();
         startDateEditText.setText(dateFormat.format(startDate));
@@ -163,7 +163,7 @@ public class ReportsFragment extends Fragment {
 
     private void selectEndDate(int year, int month, int dayOfMonth) {
         Calendar cal = GregorianCalendar.getInstance();
-        cal.set(year, month, dayOfMonth);
+        cal.set(year, month - 1, dayOfMonth);
 
         endDate = cal.getTime();
         endDateEditText.setText(dateFormat.format(endDate));

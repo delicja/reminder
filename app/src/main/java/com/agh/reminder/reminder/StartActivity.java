@@ -123,23 +123,13 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
 
 
         if (showReport) {
-
             try {
                 activityDao.update(activity);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-
-            //Intent intent = new Intent(this, ReportActivityList.class);
-            //intent.putExtra("name", activity.getName());
-            //intent.putExtra("description", activity.getDescription());
-            //intent.putExtra("time", String.valueOf(activity.getTime()));
-            //startActivity(intent);
-
             startActivity(new Intent(getApplicationContext(),MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
         }
-
-        //Toast.makeText(this.getApplicationContext(), Integer.toString(activity.getTime()), Toast.LENGTH_LONG).show();
     }
 
     private void start() {
@@ -150,5 +140,4 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
         buttonStop.setEnabled(true);
         buttonPause.setEnabled(true);
     }
-
 }

@@ -3,6 +3,7 @@ package com.agh.reminder.reminder.custom;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.concurrent.TimeUnit;
 
 public class Utils {
 
@@ -71,5 +72,25 @@ public class Utils {
         calendar.set(Calendar.MINUTE, 59);
         calendar.set(Calendar.SECOND, 59);
         calendar.set(Calendar.MILLISECOND, 999);
+    }
+
+    public static long getDateDiff(Date date1, Date date2, TimeUnit timeUnit) {
+        long diffInMillisec = date2.getTime() - date1.getTime();
+        return timeUnit.convert(diffInMillisec, TimeUnit.MILLISECONDS);
+    }
+
+    public static Date getRandomDateForDay(int day) {
+        Calendar calendar = GregorianCalendar.getInstance();
+        calendar.set(2017, 4, day);
+        calendar.set(Calendar.HOUR_OF_DAY, randomBetween(1, 23));
+        calendar.set(Calendar.MINUTE, randomBetween(0, 59));
+        calendar.set(Calendar.SECOND, randomBetween(0, 59));
+        calendar.set(Calendar.MILLISECOND, randomBetween(0, 1000));
+
+        return calendar.getTime();
+    }
+
+    public static int randomBetween(int start, int end) {
+        return start + (int)Math.round(Math.random() * (end - start));
     }
 }
