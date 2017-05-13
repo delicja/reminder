@@ -84,6 +84,11 @@ public class ActivityResultDao extends BaseDao<ActivityResults> implements IActi
         }
     }
 
+    @Override
+    public void update(ActivityResults result) throws SQLException{
+        InternalDao.update(result);
+    }
+
     private void createRandomResult(Activity activity, int day, int resultsCount) {
         for (int i = 0; i <= resultsCount; i++) {
             Date randomDateForDay = Utils.getRandomDateForDay(day);
