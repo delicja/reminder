@@ -89,6 +89,11 @@ public class ActivityResultDao extends BaseDao<ActivityResults> implements IActi
         InternalDao.update(result);
     }
 
+    @Override
+    public void deleteForActivity(Integer activityId) throws SQLException {
+        InternalDao.deleteBuilder().where().eq("activityId", activityId).query();
+    }
+
     private void createRandomResult(Activity activity, int day, int resultsCount) {
         for (int i = 0; i <= resultsCount; i++) {
             Date randomDateForDay = Utils.getRandomDateForDay(day);
