@@ -54,8 +54,16 @@ public class ReportManager {
             Integer activityId = result.getActivityId();
 
             if(!activityDictionary.containsKey(activityId)){
-                Activity activity = databaseHelper.getActivityDao().getById(activityId);
-                activityDictionary.put(activityId, activity);
+                try{
+                    Activity activity = databaseHelper.getActivityDao().getById(activityId);
+                    if(activity == null) {
+                        continue;
+                    }
+                    activityDictionary.put(activityId, activity);
+                }
+                catch(Exception ex) {
+                    continue;
+                }
             }
 
             List<ActivityResults> group;
@@ -75,6 +83,9 @@ public class ReportManager {
         StringBuilder stringBuilder = new StringBuilder();
         for (Map.Entry<Integer, List<ActivityResults>> resultGroup: resultsGrouped.entrySet()) {
             Activity activity = activityDictionary.get(resultGroup.getKey());
+            if(activity == null) {
+                continue;
+            }
 
             long expectedTime = activity.getTime() * days;
             long calculatedTime = 0L;

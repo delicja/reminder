@@ -20,4 +20,5 @@ public interface IActivityResultDao {
     void prepareDefaultData(List<Activity> activities) throws SQLException;
 
     void update(ActivityResults result) throws SQLException;
+    void deleteForActivity(Integer activityId) throws SQLException;
 }
