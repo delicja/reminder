@@ -18,4 +18,6 @@ public interface IActivityResultDao {
     long countTimeSpentForToday(Integer activityId) throws SQLException;
 
     void prepareDefaultData(List<Activity> activities) throws SQLException;
+
+    void update(ActivityResults result) throws SQLException;
 }

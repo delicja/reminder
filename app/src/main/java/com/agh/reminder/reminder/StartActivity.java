@@ -15,6 +15,7 @@ import com.agh.reminder.reminder.models.ActivityResults;
 import com.agh.reminder.reminder.models.Stopwatch;
 
 import java.sql.SQLException;
+import java.util.Date;
 
 public class StartActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -29,7 +30,6 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
 
     private DatabaseHelper databaseHelper;
     private IActivityDao activityDao;
-    private int timeSpent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,11 +84,9 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
 
         try {
             activity = activityDao.getById(id);
-            timeSpent = activity.getTime();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     @Override
@@ -114,17 +112,19 @@ public class StartActivity extends AppCompatActivity implements View.OnClickList
 
         handler.removeCallbacks(callback);
         buttonStart.setEnabled(true);
-        if (pause) buttonStop.setEnabled(true);
+        if (pause) {
+            buttonStop.setEnabled(true);
+        }
         buttonPause.setEnabled(false);
-        activity.setTime(timeSpent + stopwatch.getTime());
         ActivityResults activityResults = new ActivityResults();
         activityResults.setActivityId(activity.getId());
-        activityResults.setTimeSpent(activityResults.getTimeSpent() + activity.getTime());
+        activityResults.setTimeSpent(stopwatch.getTime() / 60);
+        activityResults.setDate(new Date());
 
 
         if (showReport) {
             try {
-                activityDao.update(activity);
+                databaseHelper.getActivityResultDao().createResult(activityResults);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
